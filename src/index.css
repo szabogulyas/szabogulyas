@@ -1,0 +1,18 @@
+body {
+    min-height: 100vh;
+    background-color: ghostwhite;
+}
+body * {
+    font-size: 11px;
+}
+h1 {
+    text-align: center;
+    padding: 25px 0 50px;
+}
+body select {
+    display: inline-block;
+    margin: 15px 0 30px;
+}
+.recharts-responsive-container {
+    margin: 0 auto;
+}
