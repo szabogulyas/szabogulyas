@@ -16,3 +16,10 @@ body select {
 .recharts-responsive-container {
     margin: 0 auto;
 }
+.updated-at {
+    font-size: 14px;
+    margin: 0 0 30px;
+}
+.updated-at b {
+    font-size: 14px;
+}

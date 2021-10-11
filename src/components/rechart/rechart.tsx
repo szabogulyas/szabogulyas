@@ -14,28 +14,31 @@ import {
 } from 'recharts';
 import {useState} from "react";
 
-function RechartDiv(props: { chartoptions: [{ name: string, uv: number, pw: number, amt: number }], charttype: string }) {
+const bootstrapclass = "col-xl-4 col-md-6 col-sm-12 col-12";
+
+function RechartDiv(props: { chartoptions: any, charttype: string, updatetime : string }) {
 
     let typeofchart = (typeof props.charttype === 'undefined') ? 'line' : props.charttype;
     const [type, changeType] = useState(typeofchart);
 
-    let selecthtml = <select value={type} onChange={changeChartType}>
+    let top_html = <select value={type} onChange={changeChartType}>
         <option value="line">Line</option>
         <option value="bar">Bar</option>
         <option value="area">Area</option>
     </select>
 
+    let date_html = <div className="updated-at"><b>Updated at:</b> {props.updatetime}</div>
+
     function changeChartType(event: { target: { value: string } }) {
         changeType(event.target.value)
     }
 
-    const bootstrapclass = "col-xl-4 col-md-6 col-sm-12 col-12";
-
     if (type === 'bar') {
         return <div className={bootstrapclass}>
-            {selecthtml}
+            {top_html}
+            {date_html}
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart /*width={600} height={400}*/ data={props.chartoptions}>
+                <BarChart data={props.chartoptions}>
                     <XAxis dataKey="name" stroke="#8884d8"/>
                     <YAxis/>
                     <Tooltip/>
@@ -46,9 +49,10 @@ function RechartDiv(props: { chartoptions: [{ name: string, uv: number, pw: numb
         </div>
     } else if (type === 'area') {
         return <div className={bootstrapclass}>
-            {selecthtml}
+            {top_html}
+            {date_html}
             <ResponsiveContainer width="100%" height={300}>
-                <AreaChart /*width={600} height={400}*/ data={props.chartoptions}
+                <AreaChart data={props.chartoptions}
                                                         margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="name"/>
@@ -60,9 +64,10 @@ function RechartDiv(props: { chartoptions: [{ name: string, uv: number, pw: numb
         </div>
     } else {
         return <div className={bootstrapclass}>
-            {selecthtml}
+            {top_html}
+            {date_html}
             <ResponsiveContainer width="100%" height={300}>
-                <LineChart /*width={600} height={400}*/ data={props.chartoptions}
+                <LineChart data={props.chartoptions}
                                                         margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="name"/>
