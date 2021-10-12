@@ -1,85 +1,35 @@
-import {
-    LineChart,
-    ResponsiveContainer,
-    AreaChart,
-    Area,
-    Line,
-    Legend,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid
-} from 'recharts';
+import chartdata from "../chartdata/chartdata";
+import Createtimestamp from "./createtimestamp";
+import Drawselect from "./drawselect";
+import Drawlinechart from "./drawlinechart";
+import Drawbarchart from "./drawbarchart";
+import Drawareachart from "./drawareachart";
 import {useState} from "react";
 
-const bootstrapclass = "col-xl-4 col-md-6 col-sm-12 col-12";
+function RechartDiv(props: { chartoptions: any, charttype: string/*, updatetime : string*/ }) {
 
-function RechartDiv(props: { chartoptions: any, charttype: string, updatetime : string }) {
-
+    let chart_data = chartdata(props.chartoptions.api_items, ["activeInfected", "deceased", "quarantined"]);
+    let last_updated = Createtimestamp(props.chartoptions.api_items.lastUpdatedAtSource);
     let typeofchart = (typeof props.charttype === 'undefined') ? 'line' : props.charttype;
     const [type, changeType] = useState(typeofchart);
 
-    let top_html = <select value={type} onChange={changeChartType}>
-        <option value="line">Line</option>
-        <option value="bar">Bar</option>
-        <option value="area">Area</option>
-    </select>
-
-    let date_html = <div className="updated-at"><b>Updated at:</b> {props.updatetime}</div>
-
-    function changeChartType(event: { target: { value: string } }) {
-        changeType(event.target.value)
+    function changeChartType(change_type: string) {
+        changeType(change_type)
     }
 
+    let chart_to_draw;
     if (type === 'bar') {
-        return <div className={bootstrapclass}>
-            {top_html}
-            {date_html}
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={props.chartoptions}>
-                    <XAxis dataKey="name" stroke="#8884d8"/>
-                    <YAxis/>
-                    <Tooltip/>
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
-                    <Bar dataKey="uv" fill="#8884d8" barSize={30}/>
-                </BarChart>
-            </ResponsiveContainer>
-        </div>
+        chart_to_draw = <Drawbarchart chart_data={chart_data}/>
     } else if (type === 'area') {
-        return <div className={bootstrapclass}>
-            {top_html}
-            {date_html}
-            <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={props.chartoptions}
-                                                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
-                    <Tooltip/>
-                    <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8"/>
-                </AreaChart>
-            </ResponsiveContainer>
-        </div>
+        chart_to_draw = <Drawareachart chart_data={chart_data}/>
     } else {
-        return <div className={bootstrapclass}>
-            {top_html}
-            {date_html}
-            <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={props.chartoptions}
-                                                        margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
-                    <Tooltip/>
-                    <Legend/>
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d"/>
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
+        chart_to_draw = <Drawlinechart chart_data={chart_data}/>
     }
+    return <div className="col-xl-4 col-md-6 col-sm-12 col-12">
+        <Drawselect type={type} onChildSelectChanged={changeChartType}/>
+        <div className="updated-at"><b>Updated at:</b> {last_updated}</div>
+        {chart_to_draw}
+    </div>
 }
 
 export default RechartDiv
