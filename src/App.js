@@ -7,20 +7,15 @@ function App() {
 
     let store = useStore();
     function loadCurrentState(store) {
-        let current_state = store.getState();
-        return current_state;
+        return store.getState();
     }
 
     const [returncontent, setReturncontent] = useState('');
 
     useEffect(() => {
         loadCurrentState(store).then(function (result) {
-            let api_data = result;
-            if (typeof api_data === 'object' && Object.keys(api_data).length > 0) {
-                let return_content = <Maincontent api_items={api_data}/>
-                setReturncontent(return_content);
-            } else {
-                return <div></div>
+            if (typeof result === 'object' && Object.keys(result).length > 0) {
+                setReturncontent(<Maincontent api_items={result}/>);
             }
         });
     }, []);

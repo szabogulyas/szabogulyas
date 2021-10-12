@@ -1,5 +1,4 @@
 import {Multiselect} from "multiselect-react-dropdown";
-import React from "react";
 
 let selectoptions = [
     {name: 'Active Infected', id: 'activeInfected'},

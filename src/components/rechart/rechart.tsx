@@ -30,9 +30,9 @@ function RechartDiv(props: { chartoptions: any, charttype: string/*, updatetime 
         chart_to_draw = <Drawlinechart chart_data={chart_data}/>
     }
     return <div className="col-xl-4 col-md-6 col-sm-12 col-12">
-        <Drawselect type={type} onChildSelectChanged={changeChartType}/>
         <div className="updated-at"><b>Updated at:</b> {Createtimestamp(props.chartoptions.api_items.lastUpdatedAtSource)}</div>
         {chart_to_draw}
+        <Drawselect type={type} onChildSelectChanged={changeChartType}/>
         <div className="multi-select-container"><Drawmultiselect onOptionsSelected={setNewChartData}/></div>
     </div>
 }

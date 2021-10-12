@@ -1,12 +1,18 @@
+import {Multiselect} from "multiselect-react-dropdown";
+
+let selectoptions = [{name: 'Line', id: 'line'}, {name: 'Bar', id: 'bar'}, {name: 'Area', id: 'area'}];
+
 function Drawselect(props: any) {
-    let onSelectChanged = (event: any) => {
-        props.onChildSelectChanged(event.target.value)
+    let onSelectChanged = (selectedList: any, selectedItem: any) => {
+        props.onChildSelectChanged(selectedItem.id)
     }
-    return <select value={props.type} onChange={onSelectChanged}>
-        <option value="line">Line</option>
-        <option value="bar">Bar</option>
-        <option value="area">Area</option>
-    </select>
+
+    let selected_result = selectoptions.filter(obj => {
+        return obj.id === props.type
+    })
+
+    return <Multiselect options={selectoptions} onSelect={onSelectChanged} singleSelect={true} displayValue="name"
+                        selectedValues={selected_result}/>
 }
 
 export default Drawselect;

@@ -19,7 +19,11 @@ body select {
 .updated-at {
     font-size: 14px;
     margin: 0 0 30px;
+    text-align: center;
 }
 .updated-at b {
     font-size: 14px;
+}
+.multi-select-container {
+    margin: 15px 0;
 }
