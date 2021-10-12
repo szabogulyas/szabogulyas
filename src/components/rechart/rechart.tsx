@@ -22,13 +22,17 @@ function RechartDiv(props: { chartoptions: any, charttype: string/*, updatetime 
         changeType(change_type)
     }
 
-    if (type === 'bar') {
-        chart_to_draw = <Drawbarchart chart_data={chart_data}/>
-    } else if (type === 'area') {
-        chart_to_draw = <Drawareachart chart_data={chart_data}/>
-    } else {
-        chart_to_draw = <Drawlinechart chart_data={chart_data}/>
+    switch (type) {
+        case 'bar':
+            chart_to_draw = <Drawbarchart chart_data={chart_data}/>
+            break;
+        case 'area':
+            chart_to_draw = <Drawareachart chart_data={chart_data}/>
+            break;
+        default:
+            chart_to_draw = <Drawlinechart chart_data={chart_data}/>
     }
+
     return <div className="col-xl-4 col-md-6 col-sm-12 col-12">
         <div className="updated-at"><b>Updated at:</b> {Createtimestamp(props.chartoptions.api_items.lastUpdatedAtSource)}</div>
         {chart_to_draw}
