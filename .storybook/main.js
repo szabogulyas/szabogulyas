@@ -10,7 +10,7 @@ module.exports = {
     "../src/**/chartdata/*.stories.@(js|jsx|ts|tsx)",
     "../src/**/rechart/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "mainapi": [
+  "app": [
     "../src/App.stories.@(js|jsx|ts|tsx)"
   ],
 }
