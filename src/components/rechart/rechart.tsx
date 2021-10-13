@@ -7,7 +7,7 @@ import Drawareachart from "./drawareachart";
 import Drawmultiselect from "./drawmultiselect";
 import {useState} from "react";
 
-function RechartDiv(props: { chartoptions: any, charttype: string/*, updatetime : string*/ }) {
+function RechartDiv(props: { chartoptions: any, charttype: string }) {
 
     let chart_to_draw;
     const [chart_elements, setChartElements] = useState(["activeInfected", "deceased", "quarantined"]);
@@ -32,8 +32,8 @@ function RechartDiv(props: { chartoptions: any, charttype: string/*, updatetime 
         default:
             chart_to_draw = <Drawlinechart chart_data={chart_data}/>
     }
-
-    return <div className="col-xl-4 col-md-6 col-sm-12 col-12">
+    let divclass = (typeof props.chartoptions.api_items.fullwidth !== 'undefined' && props.chartoptions.api_items.fullwidth === true) ? 'col-12' : 'col-xl-4 col-md-6 col-sm-12 col-12'
+    return <div className={divclass}>
         <div className="updated-at"><b>Updated at:</b> {Createtimestamp(props.chartoptions.api_items.lastUpdatedAtSource)}</div>
         {chart_to_draw}
         <Drawselect type={type} onChildSelectChanged={changeChartType}/>

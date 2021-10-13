@@ -1,8 +1,9 @@
 import RechartDiv from "../rechart/rechart";
+import Heading from "./heading";
 
 function Maincontent(api_data: any) {
     return <div id="main">
-        <h1>Covid situation in Hungary </h1>
+        <Heading headingtext="Covid situation in Hungary"/>
         <div className="container-fluid">
             <div className="row">
                 <RechartDiv chartoptions={api_data} charttype="bar"/>
